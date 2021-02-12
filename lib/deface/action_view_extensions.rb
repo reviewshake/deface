@@ -79,7 +79,9 @@ end
 # Rails 6 fix
 # https://github.com/rails/rails/commit/ec5c946138f63dc975341d6521587adc74f6b441
 # https://github.com/rails/rails/commit/ccfa01c36e79013881ffdb7ebe397cec733d15b2#diff-dfb6e0314ad9639bab460ea64871aa47R27
-if defined?( ActionView::Template::Handlers::ERB::Erubi)
+#
+# This fix is copied from here https://github.com/haml/haml/commit/09cb8efa1ce4e242b0ef1e05ce40fc6fc7b5d4c1
+if defined?(::Erubi) && (::ActionView::Template::Handlers::ERB.const_get('Erubi') != ::Erubi)
   ActionView::Template::Handlers::ERB::Erubi.class_eval do
     def initialize(input, properties = {})
       @newline_pending = 0
